@@ -10,8 +10,6 @@ use sys::stat;
 use std::os::unix::io::RawFd;
 
 fn open_tty() {
-    println!("open tty");
-
     unistd::close(0).expect("close(0) failed");
     let _ = fcntl::open("/dev/tty1", fcntl::O_RDWR | fcntl::O_NONBLOCK, stat::Mode::empty()).expect("open failed");
     unsafe {
@@ -30,7 +28,6 @@ fn ndelay_off(fd: RawFd) {
 }
 
 fn main() {
-    println!("mgetty");
     let pid = unistd::getpid();
     unistd::setsid().expect("setsid failed");
     open_tty();
