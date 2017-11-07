@@ -23,7 +23,7 @@ fn open_tty() {
 }
 
 fn ndelay_off(fd: RawFd) {
-    let original_flags = fcntl::OFlag::from_bits(fcntl::fcntl(fd, fcntl::F_GETFL).unwrap()).unwrap();
+    let original_flags = fcntl::OFlag::from_bits(fcntl::fcntl(fd, fcntl::F_GETFL).expect("fcntl failed")).expect("from_bits failed");
     fcntl::fcntl(fd, fcntl::F_SETFL(!fcntl::O_NONBLOCK & original_flags)).expect("fcntl failed");
 }
 
