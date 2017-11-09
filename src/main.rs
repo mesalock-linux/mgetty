@@ -7,7 +7,7 @@ use nix::sys::termios;
 use nix::unistd;
 use std::ffi::CString;
 use sys::stat;
-use std::os::unix::io::RawFd;
+use std::os::unix::io;
 
 fn open_tty() {
     unistd::close(0).expect("close(0) failed");
@@ -22,7 +22,7 @@ fn open_tty() {
     }
 }
 
-fn ndelay_off(fd: RawFd) {
+fn ndelay_off(fd: io::RawFd) {
     let original_flags = fcntl::OFlag::from_bits(fcntl::fcntl(fd, fcntl::F_GETFL).expect("fcntl failed")).expect("from_bits failed");
     fcntl::fcntl(fd, fcntl::F_SETFL(!fcntl::O_NONBLOCK & original_flags)).expect("fcntl failed");
 }
