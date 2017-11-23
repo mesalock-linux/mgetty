@@ -1,3 +1,9 @@
+// Copyright (c) 2017, MesaLock Linux Authors.
+// All rights reserved.
+// 
+// This work is licensed under the terms of the BSD 3-Clause License.
+// For a copy, see the LICENSE file.
+
 extern crate nix;
 extern crate libc;
 
@@ -39,6 +45,8 @@ fn main() {
     if unistd::dup2(0, 2).expect("dup2 2 failed") != 2 {
         println!("dup2 failed");
     }
+
+    // TODO: directly run ioctl to set TIOCSCTTY
 
     let tsid = termios::tcgetsid(0).expect("tcgetsid failed");
     if pid != tsid {
