@@ -46,13 +46,7 @@ fn main() {
         println!("dup2 failed");
     }
 
-    // TODO: directly run ioctl to set TIOCSCTTY
-
-    let tsid = termios::tcgetsid(0).expect("tcgetsid failed");
-    if pid != tsid {
-        println!("tsid: {}, pid: {}", tsid, pid);
-        unsafe { libc::ioctl(0, libc::TIOCSCTTY, 1); }
-    }
+    unsafe { libc::ioctl(0, libc::TIOCSCTTY, 1); }
 
     unistd::tcsetpgrp(0, pid).expect("tcsetpgrp failed");
 
