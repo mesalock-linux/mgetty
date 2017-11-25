@@ -24,7 +24,7 @@ fn open_tty() {
     }
 
     if unistd::isatty(0).expect("isatty failed") == false {
-        println!("isatty failed");
+        panic!("isatty failed");
     }
 }
 
@@ -40,10 +40,10 @@ fn main() {
     ndelay_off(0);
 
     if unistd::dup2(0, 1).expect("dup2 1 failed") != 1 {
-        println!("dup2 failed");
+        panic!("dup2 failed");
     }
     if unistd::dup2(0, 2).expect("dup2 2 failed") != 2 {
-        println!("dup2 failed");
+        panic!("dup2 failed");
     }
 
     unsafe { libc::ioctl(0, libc::TIOCSCTTY, 1); }
